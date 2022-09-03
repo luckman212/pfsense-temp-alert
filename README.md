@@ -12,3 +12,8 @@ This small script will monitor thermals using the hottest sensor on your system 
 2. `chmod +x /root/bin/temp_alert.php`
 3. add cronjob (suggest every 5m): `/usr/bin/nice -n20 /root/bin/temp_alert.php`
 4. adjust `$alarm_temp` as needed
+
+### References
+
+- https://docs.netgate.com/pfsense/en/latest/monitoring/status/hardware.html
+- https://www.reddit.com/r/PFSENSE/comments/x4nadi/pfsensetempalert_simple_php_script_to_send_alerts/
