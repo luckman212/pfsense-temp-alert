@@ -11,6 +11,7 @@ This small script will monitor thermals using the hottest sensor on your system 
 1. scp the script to `/root/bin/`
 2. `chmod +x /root/bin/temp_alert.php`
 3. add cronjob (suggest every 5m): `/usr/bin/nice -n20 /root/bin/temp_alert.php`
+> _(install Cron package from System → Packages if you don't have it)_
 4. adjust `$alarm_temp` as needed
 
 ### References
