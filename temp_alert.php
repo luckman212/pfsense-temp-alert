@@ -41,6 +41,9 @@
     exec('sysctl -a | grep temperature | awk -F: \'{sub("C","",$2); if($2>max_t){max_t=$2;v=$1}} END {print v}\'', $output, $retval);
     $sensor = $output[0];
     unset($output);
+    if (empty($sensor)) {
+      exit();
+    }
   }
 
   // check temp
