@@ -9,7 +9,6 @@
 
   function do_notify($temp, $alarm) {
     global $alarm_temp, $sentinel, $sensor;
-    $msg = null;
     $alarm = boolval($alarm);
     switch ($alarm) {
       case false:
