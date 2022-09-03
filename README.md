@@ -18,4 +18,4 @@ This small script will monitor thermals using the hottest sensor on your system 
 - https://docs.netgate.com/pfsense/en/latest/monitoring/status/hardware.html
 - https://www.reddit.com/r/PFSENSE/comments/x4nadi/pfsensetempalert_simple_php_script_to_send_alerts/
 
-[^1]: _(install Cron package from System → Packages if you don't have it)_
+[^1]: _Install the Cron package from System → Packages if you don't already have it._
