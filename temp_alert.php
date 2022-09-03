@@ -4,7 +4,7 @@
   require_once("notices.inc");
   require_once("util.inc");
 
-  $alarm_temp = 47;
+  $alarm_temp = 55;
   $sentinel = '/tmp/temp_alarm';
 
   function do_notify($temp, $alarm) {
