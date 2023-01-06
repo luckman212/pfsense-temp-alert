@@ -11,17 +11,22 @@
   ini_set("error_log", "/tmp/temp_alert.log");
 
   error_log("=== script begin ===");
-  $alarm_temp = 30; //default: 58
+  $alarm_temp = 58; //should be configured according to your firewall's upper thermal range
+  $alarm_interval = 3600; // don't repeat alerts until at least this many seconds elapsed (3600=1h,86400=1d)
   $sentinel = '/tmp/temp_alarm';
-  if ((file_exists($sentinel)) && (time()-filectime($sentinel)) > 86400) { // 1 day
-    error_log("removing stale sentinel file");
-    unlink($sentinel);
+  if (file_exists($sentinel)) {
+    $age = time()-filectime($sentinel);
+    if ($age > $alarm_interval) {
+      error_log("removing stale sentinel file (age={$age})");
+      unlink($sentinel);
+    }
   }
 
   function do_notify($temp, $alarm) {
     global $alarm_temp, $sentinel, $sensor;
     error_log("in do_notify(): temp={$temp} alarm_temp={$alarm_temp} alarm={$alarm}");
     $alarm = boolval($alarm);
+    $msg = '';
     switch ($alarm) {
       case false:
         if (file_exists($sentinel)) {
@@ -64,6 +69,8 @@
     if (empty($sensor)) {
       error_log("failed to auto-detect a temperature sensor");
       exit();
+    } else {
+      error_log("detected sensor: {$sensor}");
     }
   } else {
     error_log("using sensor {$sensor} supplied at the commandline");
