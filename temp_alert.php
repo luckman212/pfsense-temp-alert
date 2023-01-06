@@ -11,12 +11,16 @@
   ini_set("error_log", "/tmp/temp_alert.log");
 
   error_log("=== script begin ===");
-  $alarm_temp = 58;
+  $alarm_temp = 30; //default: 58
   $sentinel = '/tmp/temp_alarm';
+  if ((file_exists($sentinel)) && (time()-filectime($sentinel)) > 86400) { // 1 day
+    error_log("removing stale sentinel file");
+    unlink($sentinel);
+  }
 
   function do_notify($temp, $alarm) {
     global $alarm_temp, $sentinel, $sensor;
-    error_log("in do_notify(): alarm_temp={$alarm_temp} temp={$temp} alarm={$alarm}");
+    error_log("in do_notify(): temp={$temp} alarm_temp={$alarm_temp} alarm={$alarm}");
     $alarm = boolval($alarm);
     switch ($alarm) {
       case false:
@@ -70,7 +74,6 @@
   if (($retval == 0) && (count($output))) {
     $temp = $output[0] ? intval($output[0]) : -1;
     $alarm = ($temp >= $alarm_temp) ? 1 : 0;
-    error_log("temp: {$temp} alarm_temp: {$alarm_temp} alarm state: {$alarm}");
     do_notify($temp, $alarm);
   } else {
     error_log("sensor {$sensor} returned no data");
